@@ -82,7 +82,7 @@ private slots:
 
 private:
 
-    void timerEvent(QTimerEvent *event);
+    void timerEvent(QTimerEvent *);
     void CheckBorders();
     bool eventFilter(QObject*, QEvent *e);
     void onKeyPressed(int key);
