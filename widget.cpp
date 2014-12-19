@@ -10,16 +10,16 @@ Widget::Widget(QWidget *parent) :
 {
     QApplication::instance()->installEventFilter(this);
 
-    points1 = new QMovie("/home/viktor/Documents/Games/arkanoid/1_point.gif");
-    points0 = new QMovie("/home/viktor/Documents/Games/arkanoid/0_point.gif");
-    points2 = new QMovie("/home/viktor/Documents/Games/arkanoid/2_point.gif");
-    points3 = new QMovie("/home/viktor/Documents/Games/arkanoid/3_point.gif");
-    points4 =new QMovie("/home/viktor/Documents/Games/arkanoid/4_point.gif");
-    points5 =new QMovie("/home/viktor/Documents/Games/arkanoid/5_point.gif");
-    points6 = new QMovie("/home/viktor/Documents/Games/arkanoid/6_point.gif");
-    points7 = new QMovie("/home/viktor/Documents/Games/arkanoid/7_point.gif");
-    points8 = new QMovie("/home/viktor/Documents/Games/arkanoid/8_point.gif");
-    points9 = new QMovie("/home/viktor/Documents/Games/arkanoid/9_point.gif");
+    points1 = new QMovie(":/images/1_point.gif");
+    points0 = new QMovie(":/images/0_point.gif");
+    points2 = new QMovie(":/images/2_point.gif");
+    points3 = new QMovie(":/images/3_point.gif");
+    points4 =new QMovie(":/images/4_point.gif");
+    points5 =new QMovie(":/images/5_point.gif");
+    points6 = new QMovie(":/images/6_point.gif");
+    points7 = new QMovie(":/images/7_point.gif");
+    points8 = new QMovie(":/images/8_point.gif");
+    points9 = new QMovie(":/images/9_point.gif");
     ball= new QImage;
     bita = new QImage;
     brick = new QImage;
@@ -30,13 +30,13 @@ Widget::Widget(QWidget *parent) :
     genBlocks(blocksArr);
     ui->setupUi(this);
     ui->restart->hide();
-    ball->load("/home/viktor/Documents/Games/arkanoid/ball.png");
-    bita->load("/home/viktor/Documents/Games/arkanoid/Bita.bmp");
-    brick->load("/home/viktor/Documents/Games/arkanoid/brick.png");
-    brick2->load("/home/viktor/Documents/Games/arkanoid/brick_2.png");
-    brick3->load("/home/viktor/Documents/Games/arkanoid/brick_3.png");
-    brick4->load("/home/viktor/Documents/Games/arkanoid/brick_4.png");
-    brick5->load("/home/viktor/Documents/Games/arkanoid/brick_5.png");
+    ball->load(":/images/ball.png");
+    bita->load(":/images/Bita.bmp");
+    brick->load(":/images/brick.png");
+    brick2->load(":/images/brick_2.png");
+    brick3->load(":/images/brick_3.png");
+    brick4->load(":/images/brick_4.png");
+    brick5->load(":/images/brick_5.png");
     ballY = bitaY - ball->height() / 2;
 }
 
@@ -54,7 +54,7 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::paintEvent(QPaintEvent *event)
+void Widget::paintEvent(QPaintEvent*)
 {
      QPainter painter(this);
      painter.setRenderHint(QPainter::Antialiasing, true);
@@ -321,7 +321,7 @@ void Widget::paintEvent(QPaintEvent *event)
      }
 }
 
-void Widget::timerEvent(QTimerEvent *event)
+void Widget::timerEvent(QTimerEvent *)
 {
    ballX += speedBallX;
    ballY -= speedBallY;
