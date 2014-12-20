@@ -37,7 +37,7 @@ Widget::Widget(QWidget *parent) :
     brick3->load(":/images/brick_3.png");
     brick4->load(":/images/brick_4.png");
     brick5->load(":/images/brick_5.png");
-    ballY = bitaY - ball->height() / 2;
+    ballY = bitaY - ball->height();
 }
 
 Widget::~Widget()
@@ -57,9 +57,12 @@ Widget::~Widget()
 void Widget::paintEvent(QPaintEvent*)
 {
      QPainter painter(this);
+
      painter.setRenderHint(QPainter::Antialiasing, true);
+     painter.setBrush(Qt::blue);
+     painter.setPen(Qt::blue);
      painter.drawImage(ballX - ball->width() / 2, ballY - ball->height() / 2, *ball, 0, 0, ball->width(), ball->height());
-     painter.drawImage(bitaX - bita->width() / 2, bitaY - bita->height() / 2, *bita, 0, 0, bita->width(), bita->height());
+     painter.drawRect(bitaX - bitaWidth/2, bitaY-bitaHeight/2, bitaWidth, bitaHeight);
      switch(paintPointsMid)
      {
         case 0:
@@ -278,7 +281,7 @@ void Widget::paintEvent(QPaintEvent*)
          painter.drawImage(i*12, ball->height(), *ball, 0, 0, ball->width(), ball->height());
      }
      int gapX = 40;
-     int gapY = 0;
+     int gapY  = 0;
      for(int i = 0; i < 9; i++)
      {
          for(int j = 0; j < 9; j++)
@@ -289,27 +292,27 @@ void Widget::paintEvent(QPaintEvent*)
                  {
                     case 5:
                     {
-                        painter.drawImage(i*brickSW + gapX, j*brickSH + gapY, *brick, 0, 0, brickSW,brickSH);
+                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick, 0, 0, brickSW,brickSH);
                         break;
                     }
                     case 4:
                     {
-                        painter.drawImage(i*brickSW + gapX, j*brickSH+ gapY, *brick2, 0, 0, brickSW,brickSH);
+                        painter.drawImage(i*brickSW + gapX*i, j*brickSH+ gapY*j, *brick2, 0, 0, brickSW,brickSH);
                         break;
                     }
                     case 3:
                     {
-                        painter.drawImage(i*brickSW+ gapX, j*brickSH + gapY, *brick3, 0, 0, brickSW,brickSH);
+                        painter.drawImage(i*brickSW+ gapX*i, j*brickSH + gapY*j, *brick3, 0, 0, brickSW,brickSH);
                         break;
                     }
                     case 2:
                     {
-                        painter.drawImage(i*brickSW + gapX, j*brickSH + gapY, *brick4, 0, 0, brickSW,brickSH);
+                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick4, 0, 0, brickSW,brickSH);
                         break;
                     }
                      case 1:
                     {
-                        painter.drawImage(i*brickSW + gapX, j*brickSH + gapY, *brick5, 0, 0, brickSW,brickSH);
+                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick5, 0, 0, brickSW,brickSH);
                         break;
                     }
 
@@ -317,7 +320,6 @@ void Widget::paintEvent(QPaintEvent*)
              }
 
          }
-         gapX+= 40;
      }
 }
 
@@ -340,13 +342,13 @@ void Widget::CheckBorders()
     {
         countLife--;
         killTimer(idTimer);
-        bitaX = rand() % widgetWigth - (bita->width() / 2);
+        bitaX = rand() % widgetWigth - (bitaWidth / 2);
         ballX = bitaX;
         ballY = bitaY  - ball->height();
         speedBallY *=-1;
         if(countLife != 0)
         {
-            startTimer(20);
+            startTimer(10);
         }
         else
         {
@@ -357,7 +359,7 @@ void Widget::CheckBorders()
     int i = 0;
     int j = 0;
     int gapX = 40;
-    int gapY = 0;
+    int gapY  = 0;
     for(i = 0; i < 9; i++)
     {
         for(j = 0; j < 9; j++)
@@ -371,10 +373,10 @@ void Widget::CheckBorders()
                 continue;
             }
 
-            if ((ballX < (brickRight + gapX) && ballX >= brickLeft + gapX) && (brickBottom + gapY > ballY && ballY >= brickTop + gapY))
+            if ((ballX - ball->width()/2) < (brickRight + gapX*i) && (ballX + ball->width()/2 >= brickLeft + gapX*i) && (brickBottom + gapY*j > ballY - ball->height()/2 && ballY + ball->height()/2>= brickTop + gapY*j))
             {
-                int distanceVert = std::min(abs(ballY - (brickTop + gapY)), abs(ballY - (brickBottom + gapY)));
-                int distanceHoriz = std::min(abs (ballX - (brickLeft + gapX)), abs(ballX - (brickRight + gapX)));
+                int distanceVert = std::min(abs(ballY + ball->height()/2 - (brickTop + gapY*j)), abs(ballY - ball->height()/2 - (brickBottom + gapY*j)));
+                int distanceHoriz = std::min(abs (ballX + ball->width()/2- (brickLeft + gapX*i)), abs(ballX- ball->width()/2- (brickRight + gapX*i)));
                 if(distanceVert < distanceHoriz)
                 {
                     speedBallY *=-1;
@@ -383,7 +385,7 @@ void Widget::CheckBorders()
                 {
                     if(distanceVert > distanceHoriz)
                     {
-                     speedBallX *= -1;
+                        speedBallX *= -1;
                     }
                     else
                     {
@@ -393,11 +395,10 @@ void Widget::CheckBorders()
                 }
                 CountPoints();
                    blocksArr[i][j]--;
-                   skipRot = 3;
+                   skipRot = 5;
                    break;
             }
         }
-        gapX+= 40;
     }
 }
 
@@ -407,12 +408,8 @@ void Widget::BallAngle(void)
     {
             speedBallX *= -1;
     }
-    if(abs((bitaX - bita->width()/2) - (ballX - ball->width()/2)) <= (bita->width() -ball->width()) && abs(bitaY - bita->height()/2) - (ballY - ball->height()/2) <= (ball->height() - bita->height()))
+    if((bitaX - bitaWidth /2 <= (ballX - ball->width()/2)) && (bitaX + bitaWidth/2 >= (ballX - ball->width()/2)) && (bitaY-bitaHeight/2 <= (ballY - ball->height()/2)) && (bitaY+bitaHeight/2 > (ballY - ball->height())))
     {
-        if((bitaX <= (ballX - ball->width()/2) && bitaX+3 >= (ballX - ball->width()/2)) || ((bitaX + bita->width() - 3) <= (ballX - ball->width()/2) <=  (ballX) && (bitaX + bita->width()) >=  (ballX - ball->width()/2)))
-        {
-            speedBallX *= -1;
-        }
         speedBallY *= -1;
     }
     else
@@ -438,7 +435,7 @@ void Widget::onKeyPressed(int key)
 {
     if (key == Qt::Key_Right)
     {
-        if(bitaX < widgetWigth- (bita->width() / 2))
+        if(bitaX < widgetWigth- (bitaWidth / 2))
         {
             bitaX += speedBita;
         }
@@ -476,19 +473,19 @@ void Widget::on_start_clicked()
 {
        countLife = 3;
        genBlocks(blocksArr);
-       idTimer = startTimer(20);
+       idTimer = startTimer(10);
        ui->start->hide();
 }
 
 void Widget::on_restart_clicked()
 {
-    bitaX = rand() % widgetWigth - (bita->width() / 2);
+    bitaX = rand() % widgetWigth - bitaWidth;
     ballX = bitaX;
     ballY = bitaY  - ball->height();
     speedBallY *=-1;
     countLife = 3;
     genBlocks(blocksArr);
-    idTimer = startTimer(20);
+    idTimer = startTimer(10);
     ui->restart->hide();
 }
 

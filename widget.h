@@ -53,6 +53,8 @@ public:
 
     void BallAngle(void);
     void CountPoints(void);
+    const float bitaWidth = 80;
+    const float bitaHeight = 15;
     unsigned int paintPointsMid = 0;
     unsigned int paintPointsLeft = 0;
     unsigned int paintPointsRigth = 0;
@@ -65,9 +67,9 @@ public:
     int ballX = bitaX;
     int bitaY = 640;
     int ballY;
-    float speedBallX = 2;
-    float speedBallY = 2;
-    int speedBita = 15;
+    float speedBallX = 1;
+    float speedBallY = 1;
+    int speedBita = 7;
     const int brickSW = 80;
     const int brickSH = 40;
     int idTimer;

@@ -22,4 +22,4 @@ FORMS    += widget.ui
 RESOURCES += \
     resources.qrc
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -Werror
