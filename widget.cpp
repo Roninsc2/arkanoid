@@ -57,268 +57,270 @@ Widget::~Widget()
 void Widget::paintEvent(QPaintEvent*)
 {
      QPainter painter(this);
-
-     painter.setRenderHint(QPainter::Antialiasing, true);
-     painter.setBrush(Qt::blue);
-     painter.setPen(Qt::blue);
-     painter.drawImage(ballX - ball->width() / 2, ballY - ball->height() / 2, *ball, 0, 0, ball->width(), ball->height());
-     painter.drawRect(bitaX - bitaWidth/2, bitaY-bitaHeight/2, bitaWidth, bitaHeight);
-     switch(paintPointsMid)
+     if(countLife)
      {
-        case 0:
-        {
-          painter.drawPixmap(50,640,points0->currentPixmap());
-          points0->start();
-          break;
-
-        }
-        case 1:
-        {
-          painter.drawPixmap(50,640,points1->currentPixmap());
-          points1->start();
-          break;
-        }
-        case 2:
-        {
-          painter.drawPixmap(50,640,points2->currentPixmap());
-          points2->start();
-          break;
-        }
-        case 3:
-        {
-          painter.drawPixmap(50,640,points3->currentPixmap());
-          points3->start();
-          break;
-        }
-        case 4:
-        {
-          painter.drawPixmap(50,640,points4->currentPixmap());
-          points4->start();
-          break;
-        }
-        case 5:
-        {
-          painter.drawPixmap(50,640,points5->currentPixmap());
-          points5->start();
-          break;
-
-        }
-        case 6:
-        {
-          painter.drawPixmap(50,640,points6->currentPixmap());
-          points6->start();
-          break;
-
-        }
-        case 7:
-        {
-          painter.drawPixmap(50,640,points7->currentPixmap());
-          points7->start();
-          break;
-
-        }
-        case 8:
-        {
-          painter.drawPixmap(50,640,points8->currentPixmap());
-          points8->start();
-          break;
-
-        }
-        case 9:
-        {
-          painter.drawPixmap(50,640,points9->currentPixmap());
-          points9->start();
-          break;
-
-        }
-        default:
-         break;
-     }
-     switch(paintPointsLeft)
-     {
-        case 0:
-        {
-          painter.drawPixmap(10,640,points0->currentPixmap());
-          points0->start();
-          break;
-
-        }
-        case 1:
-        {
-          painter.drawPixmap(10,640,points1->currentPixmap());
-          points1->start();
-          break;
-        }
-        case 2:
-        {
-          painter.drawPixmap(10,640,points2->currentPixmap());
-          points2->start();
-          break;
-        }
-        case 3:
-        {
-          painter.drawPixmap(10,640,points3->currentPixmap());
-          points3->start();
-          break;
-        }
-        case 4:
-        {
-          painter.drawPixmap(10,640,points4->currentPixmap());
-          points4->start();
-          break;
-        }
-        case 5:
-        {
-          painter.drawPixmap(10,640,points5->currentPixmap());
-          points5->start();
-          break;
-
-        }
-        case 6:
-        {
-          painter.drawPixmap(10,640,points6->currentPixmap());
-          points6->start();
-          break;
-
-        }
-        case 7:
-        {
-          painter.drawPixmap(10,640,points7->currentPixmap());
-          points7->start();
-          break;
-
-        }
-        case 8:
-        {
-          painter.drawPixmap(10,640,points8->currentPixmap());
-          points8->start();
-          break;
-
-        }
-        case 9:
-        {
-          painter.drawPixmap(10,640,points9->currentPixmap());
-          points9->start();
-          break;
-
-        }
-        default:
-         break;
-     }
-     switch(paintPointsRigth)
-     {
-        case 0:
-        {
-          painter.drawPixmap(90,640,points0->currentPixmap());
-          points0->start();
-          break;
-
-        }
-        case 1:
-        {
-          painter.drawPixmap(90,640,points1->currentPixmap());
-          points1->start();
-          break;
-        }
-        case 2:
-        {
-          painter.drawPixmap(90,640,points2->currentPixmap());
-          points2->start();
-          break;
-        }
-        case 3:
-        {
-          painter.drawPixmap(90,640,points3->currentPixmap());
-          points3->start();
-          break;
-        }
-        case 4:
-        {
-          painter.drawPixmap(90,640,points4->currentPixmap());
-          points4->start();
-          break;
-        }
-        case 5:
-        {
-          painter.drawPixmap(90,640,points5->currentPixmap());
-          points5->start();
-          break;
-
-        }
-        case 6:
-        {
-          painter.drawPixmap(90,640,points6->currentPixmap());
-          points6->start();
-          break;
-
-        }
-        case 7:
-        {
-          painter.drawPixmap(90,640,points7->currentPixmap());
-          points7->start();
-          break;
-
-        }
-        case 8:
-        {
-          painter.drawPixmap(90,640,points8->currentPixmap());
-          points8->start();
-          break;
-
-        }
-        case 9:
-        {
-          painter.drawPixmap(90,640,points9->currentPixmap());
-          points9->start();
-          break;
-
-        }
-        default:
-         break;
-     }
-     for(int i = 1; i <= countLife; i++)
-     {
-         painter.drawImage(i*12, ball->height(), *ball, 0, 0, ball->width(), ball->height());
-     }
-     int gapX = 40;
-     int gapY  = 0;
-     for(int i = 0; i < 9; i++)
-     {
-         for(int j = 0; j < 9; j++)
+         painter.setRenderHint(QPainter::Antialiasing, true);
+         painter.setBrush(Qt::blue);
+         painter.setPen(Qt::blue);
+         painter.drawImage(ballX - ball->width() / 2, ballY - ball->height() / 2, *ball, 0, 0, ball->width(), ball->height());
+         painter.drawRect(bitaX - bitaWidth/2, bitaY-bitaHeight/2, bitaWidth, bitaHeight);
+         switch(paintPointsMid)
          {
-             if(blocksArr[i][j] != 0)
+            case 0:
+            {
+              painter.drawPixmap(50,640,points0->currentPixmap());
+              points0->start();
+              break;
+
+            }
+            case 1:
+            {
+              painter.drawPixmap(50,640,points1->currentPixmap());
+              points1->start();
+              break;
+            }
+            case 2:
+            {
+              painter.drawPixmap(50,640,points2->currentPixmap());
+              points2->start();
+              break;
+            }
+            case 3:
+            {
+              painter.drawPixmap(50,640,points3->currentPixmap());
+              points3->start();
+              break;
+            }
+            case 4:
+            {
+              painter.drawPixmap(50,640,points4->currentPixmap());
+              points4->start();
+              break;
+            }
+            case 5:
+            {
+              painter.drawPixmap(50,640,points5->currentPixmap());
+              points5->start();
+              break;
+
+            }
+            case 6:
+            {
+              painter.drawPixmap(50,640,points6->currentPixmap());
+              points6->start();
+              break;
+
+            }
+            case 7:
+            {
+              painter.drawPixmap(50,640,points7->currentPixmap());
+              points7->start();
+              break;
+
+            }
+            case 8:
+            {
+              painter.drawPixmap(50,640,points8->currentPixmap());
+              points8->start();
+              break;
+
+            }
+            case 9:
+            {
+              painter.drawPixmap(50,640,points9->currentPixmap());
+              points9->start();
+              break;
+
+            }
+            default:
+             break;
+         }
+         switch(paintPointsLeft)
+         {
+            case 0:
+            {
+              painter.drawPixmap(10,640,points0->currentPixmap());
+              points0->start();
+              break;
+
+            }
+            case 1:
+            {
+              painter.drawPixmap(10,640,points1->currentPixmap());
+              points1->start();
+              break;
+            }
+            case 2:
+            {
+              painter.drawPixmap(10,640,points2->currentPixmap());
+              points2->start();
+              break;
+            }
+            case 3:
+            {
+              painter.drawPixmap(10,640,points3->currentPixmap());
+              points3->start();
+              break;
+            }
+            case 4:
+            {
+              painter.drawPixmap(10,640,points4->currentPixmap());
+              points4->start();
+              break;
+            }
+            case 5:
+            {
+              painter.drawPixmap(10,640,points5->currentPixmap());
+              points5->start();
+              break;
+
+            }
+            case 6:
+            {
+              painter.drawPixmap(10,640,points6->currentPixmap());
+              points6->start();
+              break;
+
+            }
+            case 7:
+            {
+              painter.drawPixmap(10,640,points7->currentPixmap());
+              points7->start();
+              break;
+
+            }
+            case 8:
+            {
+              painter.drawPixmap(10,640,points8->currentPixmap());
+              points8->start();
+              break;
+
+            }
+            case 9:
+            {
+              painter.drawPixmap(10,640,points9->currentPixmap());
+              points9->start();
+              break;
+
+            }
+            default:
+             break;
+         }
+         switch(paintPointsRigth)
+         {
+            case 0:
+            {
+              painter.drawPixmap(90,640,points0->currentPixmap());
+              points0->start();
+              break;
+
+            }
+            case 1:
+            {
+              painter.drawPixmap(90,640,points1->currentPixmap());
+              points1->start();
+              break;
+            }
+            case 2:
+            {
+              painter.drawPixmap(90,640,points2->currentPixmap());
+              points2->start();
+              break;
+            }
+            case 3:
+            {
+              painter.drawPixmap(90,640,points3->currentPixmap());
+              points3->start();
+              break;
+            }
+            case 4:
+            {
+              painter.drawPixmap(90,640,points4->currentPixmap());
+              points4->start();
+              break;
+            }
+            case 5:
+            {
+              painter.drawPixmap(90,640,points5->currentPixmap());
+              points5->start();
+              break;
+
+            }
+            case 6:
+            {
+              painter.drawPixmap(90,640,points6->currentPixmap());
+              points6->start();
+              break;
+
+            }
+            case 7:
+            {
+              painter.drawPixmap(90,640,points7->currentPixmap());
+              points7->start();
+              break;
+
+            }
+            case 8:
+            {
+              painter.drawPixmap(90,640,points8->currentPixmap());
+              points8->start();
+              break;
+
+            }
+            case 9:
+            {
+              painter.drawPixmap(90,640,points9->currentPixmap());
+              points9->start();
+              break;
+
+            }
+            default:
+             break;
+         }
+         for(int i = 1; i <= countLife; i++)
+         {
+             painter.drawImage(i*12, ball->height(), *ball, 0, 0, ball->width(), ball->height());
+         }
+         int gapX = 40;
+         int gapY  = 0;
+         for(int i = 0; i < 9; i++)
+         {
+             for(int j = 0; j < 9; j++)
              {
-                 switch(blocksArr[i][j])
+                 if(blocksArr[i][j] != 0)
                  {
-                    case 5:
-                    {
-                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick, 0, 0, brickSW,brickSH);
-                        break;
-                    }
-                    case 4:
-                    {
-                        painter.drawImage(i*brickSW + gapX*i, j*brickSH+ gapY*j, *brick2, 0, 0, brickSW,brickSH);
-                        break;
-                    }
-                    case 3:
-                    {
-                        painter.drawImage(i*brickSW+ gapX*i, j*brickSH + gapY*j, *brick3, 0, 0, brickSW,brickSH);
-                        break;
-                    }
-                    case 2:
-                    {
-                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick4, 0, 0, brickSW,brickSH);
-                        break;
-                    }
-                     case 1:
-                    {
-                        painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick5, 0, 0, brickSW,brickSH);
-                        break;
-                    }
+                     switch(blocksArr[i][j])
+                     {
+                        case 5:
+                        {
+                            painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick, 0, 0, brickSW,brickSH);
+                            break;
+                        }
+                        case 4:
+                        {
+                            painter.drawImage(i*brickSW + gapX*i, j*brickSH+ gapY*j, *brick2, 0, 0, brickSW,brickSH);
+                            break;
+                        }
+                        case 3:
+                        {
+                            painter.drawImage(i*brickSW+ gapX*i, j*brickSH + gapY*j, *brick3, 0, 0, brickSW,brickSH);
+                            break;
+                        }
+                        case 2:
+                        {
+                            painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick4, 0, 0, brickSW,brickSH);
+                            break;
+                        }
+                         case 1:
+                        {
+                            painter.drawImage(i*brickSW + gapX*i, j*brickSH + gapY*j, *brick5, 0, 0, brickSW,brickSH);
+                            break;
+                        }
 
+                     }
                  }
-             }
 
+             }
          }
      }
 }
@@ -348,14 +350,17 @@ void Widget::CheckBorders()
         speedBallY *=-1;
         if(countLife != 0)
         {
-            startTimer(10);
+            startTimer(20);
         }
         else
         {
             ui->restart->show();
         }
     }
-    if (skipRot) return;
+    if (skipRot)
+    {
+        return;
+    }
     int i = 0;
     int j = 0;
     int gapX = 40;
@@ -395,7 +400,7 @@ void Widget::CheckBorders()
                 }
                 CountPoints();
                    blocksArr[i][j]--;
-                   skipRot = 5;
+                   skipRot = 4;
                    break;
             }
         }
@@ -408,7 +413,7 @@ void Widget::BallAngle(void)
     {
             speedBallX *= -1;
     }
-    if((bitaX - bitaWidth /2 <= (ballX - ball->width()/2)) && (bitaX + bitaWidth/2 >= (ballX - ball->width()/2)) && (bitaY-bitaHeight/2 <= (ballY - ball->height()/2)) && (bitaY+bitaHeight/2 > (ballY - ball->height())))
+    if((bitaX - bitaWidth /2 <= (ballX - ball->width()/2)) && (bitaX + bitaWidth/2 >= (ballX - ball->width()/2)) && (bitaY == (ballY + ball->height()/2)))
     {
         speedBallY *= -1;
     }
@@ -435,16 +440,17 @@ void Widget::onKeyPressed(int key)
 {
     if (key == Qt::Key_Right)
     {
-        if(bitaX < widgetWigth- (bitaWidth / 2))
+        if(bitaX < widgetWigth-bitaWidth/2)
         {
             bitaX += speedBita;
         }
     }
     if (key == Qt::Key_Left)
     {
-        if(bitaX > 0)
+        if(bitaX > bitaWidth/2)
         {
             bitaX -= speedBita;
+
         }
     }
 }
@@ -473,7 +479,7 @@ void Widget::on_start_clicked()
 {
        countLife = 3;
        genBlocks(blocksArr);
-       idTimer = startTimer(10);
+       idTimer = startTimer(20);
        ui->start->hide();
 }
 
@@ -485,7 +491,7 @@ void Widget::on_restart_clicked()
     speedBallY *=-1;
     countLife = 3;
     genBlocks(blocksArr);
-    idTimer = startTimer(10);
+    idTimer = startTimer(20);
     ui->restart->hide();
 }
 
