@@ -7,7 +7,6 @@
 #include <QKeyEvent>
 #include <math.h>
 #include <QMovie>
-#include <algorithm>
 
 
 namespace Ui {
