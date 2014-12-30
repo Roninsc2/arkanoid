@@ -86,8 +86,8 @@ private:
 
     void timerEvent(QTimerEvent *);
     void CheckBorders();
-    bool eventFilter(QObject*, QEvent *e);
-    void onKeyPressed(int key);
+    bool eventFilter(QObject *, QEvent *e);
+    int onKeyPressed(int key);
 
     void genBlocks(int arr[0][9]);
 

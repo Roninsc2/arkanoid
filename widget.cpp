@@ -4,6 +4,8 @@
 
 #define PI 3.14159265;
 
+float bitaUpdate = 0;
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -329,6 +331,21 @@ void Widget::timerEvent(QTimerEvent *)
 {
    ballX += speedBallX;
    ballY -= speedBallY;
+   if(bitaX < widgetWigth - bitaWidth/2 && bitaX > bitaWidth/2)
+   {
+        bitaX += bitaUpdate;
+   }
+   else
+   {
+       if(bitaX > widgetWigth - bitaWidth/2)
+       {
+           bitaX = widgetWigth - bitaWidth/2 - 1;
+       }
+       if(bitaX < bitaWidth/2)
+       {
+           bitaX = bitaWidth/2+1;
+       }
+   }
    CheckBorders();
    update();
 }
@@ -426,33 +443,40 @@ void Widget::BallAngle(void)
     }
 }
 
+
 bool Widget::eventFilter(QObject *, QEvent *e)
 {
     if (e->type() == QEvent::KeyPress)
     {
-        onKeyPressed(((QKeyEvent*)e)->key());
+        if(onKeyPressed(((QKeyEvent*)e)->key())== 0)
+        {
+            bitaUpdate = 0;
+        }
+        return true;
+    }
+    if (e->type() == QEvent::KeyRelease)
+    {
+        bitaUpdate = 0;
         return true;
     }
     return false;
 }
 
-void Widget::onKeyPressed(int key)
+
+int Widget::onKeyPressed(int key)
 {
     if (key == Qt::Key_Right)
     {
-        if(bitaX < widgetWigth-bitaWidth/2)
-        {
-            bitaX += speedBita;
-        }
+        bitaUpdate = 5;
+        return 1;
     }
     if (key == Qt::Key_Left)
     {
-        if(bitaX > bitaWidth/2)
-        {
-            bitaX -= speedBita;
-
-        }
+        bitaUpdate = -5;
+        return 1;
     }
+    bitaUpdate = 0;
+    return 0;
 }
 
  void Widget::genBlocks(int arr[0][9])
