@@ -69,7 +69,6 @@ public:
     int ballY;
     float speedBallX = 2;
     float speedBallY = 2;
-    float speedBita = 7;
     const int brickSW = 80;
     const int brickSH = 40;
     int idTimer;
