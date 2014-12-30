@@ -6,8 +6,8 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <math.h>
-#include <stdlib.h>
 #include <QMovie>
+#include <algorithm>
 
 
 namespace Ui {
@@ -51,6 +51,7 @@ private:
 
 public:
 
+    int bitaUpdate = 0;
     void BallAngle(void);
     void CountPoints(void);
     const int bitaWidth = 80;
@@ -61,9 +62,9 @@ public:
     const int coordPointsX = 640;
     const int coordPointsY = 500;
     int countLife = 0;
-    const int widgetWigth = 1280;
+    const int widgetWidth = 1280;
     const int widgetHeight = 720;
-    int bitaX = rand() % (widgetWigth - bitaWidth) + bitaWidth;
+    int bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
     float ballX = bitaX;
     float bitaY = 640;
     int ballY;
@@ -86,7 +87,7 @@ private:
     void timerEvent(QTimerEvent *);
     void CheckBorders();
     bool eventFilter(QObject *, QEvent *e);
-    int onKeyPressed(int key);
+    void onKeyPressed(int key);
 
     void genBlocks(int arr[0][9]);
 

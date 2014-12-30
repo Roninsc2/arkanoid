@@ -4,8 +4,6 @@
 
 #define PI 3.14159265;
 
-float bitaUpdate = 0;
-
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -331,21 +329,7 @@ void Widget::timerEvent(QTimerEvent *)
 {
    ballX += speedBallX;
    ballY -= speedBallY;
-   if(bitaX < widgetWigth - bitaWidth/2 && bitaX > bitaWidth/2)
-   {
-        bitaX += bitaUpdate;
-   }
-   else
-   {
-       if(bitaX > widgetWigth - bitaWidth/2)
-       {
-           bitaX = widgetWigth - bitaWidth/2 - 1;
-       }
-       if(bitaX < bitaWidth/2)
-       {
-           bitaX = bitaWidth/2+1;
-       }
-   }
+   bitaX = std::min(std::max(bitaX + bitaUpdate, bitaWidth/2), widgetWidth - bitaWidth/2);
    CheckBorders();
    update();
 }
@@ -361,7 +345,7 @@ void Widget::CheckBorders()
     {
         countLife--;
         killTimer(idTimer);
-        bitaX = rand() % widgetWigth - (bitaWidth / 2);
+        bitaX = rand() % widgetWidth - (bitaWidth / 2);
         ballX = bitaX;
         ballY = bitaY  - ball->height();
         speedBallY *=-1;
@@ -426,7 +410,7 @@ void Widget::CheckBorders()
 
 void Widget::BallAngle(void)
 {
-    if(ballX > widgetWigth || ballX < 0)
+    if(ballX > widgetWidth || ballX < 0)
     {
             speedBallX *= -1;
     }
@@ -448,10 +432,7 @@ bool Widget::eventFilter(QObject *, QEvent *e)
 {
     if (e->type() == QEvent::KeyPress)
     {
-        if(onKeyPressed(((QKeyEvent*)e)->key())== 0)
-        {
-            bitaUpdate = 0;
-        }
+        onKeyPressed(((QKeyEvent*)e)->key());
         return true;
     }
     if (e->type() == QEvent::KeyRelease)
@@ -463,20 +444,16 @@ bool Widget::eventFilter(QObject *, QEvent *e)
 }
 
 
-int Widget::onKeyPressed(int key)
+void Widget::onKeyPressed(int key)
 {
     if (key == Qt::Key_Right)
     {
         bitaUpdate = 5;
-        return 1;
     }
     if (key == Qt::Key_Left)
     {
         bitaUpdate = -5;
-        return 1;
     }
-    bitaUpdate = 0;
-    return 0;
 }
 
  void Widget::genBlocks(int arr[0][9])
@@ -509,7 +486,7 @@ void Widget::on_start_clicked()
 
 void Widget::on_restart_clicked()
 {
-    bitaX = rand() % widgetWigth - bitaWidth;
+    bitaX = rand() % widgetWidth - bitaWidth;
     ballX = bitaX;
     ballY = bitaY  - ball->height();
     speedBallY *=-1;
