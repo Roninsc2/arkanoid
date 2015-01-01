@@ -9,7 +9,12 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     QApplication::instance()->installEventFilter(this);
-
+    int i;
+    blocksArr.resize(9);
+    for(i = 0; i < 9; i++)
+    {
+        blocksArr[i].resize(9);
+    }
     points1 = new QMovie(":/images/1_point.gif");
     points0 = new QMovie(":/images/0_point.gif");
     points2 = new QMovie(":/images/2_point.gif");
@@ -27,7 +32,7 @@ Widget::Widget(QWidget *parent) :
     brick3 = new QImage;
     brick4 = new QImage;
     brick5 = new QImage;
-    genBlocks(blocksArr);
+    genBlocks();
     ui->setupUi(this);
     ui->restart->hide();
     ball->load(":/images/ball.png");
@@ -44,6 +49,14 @@ Widget::~Widget()
 {
     delete points0;
     delete points1;
+    delete points2;
+    delete points3;
+    delete points4;
+    delete points5;
+    delete points6;
+    delete points7;
+    delete points8;
+    delete points9;
     delete ball;
     delete bita;
     delete brick;
@@ -456,7 +469,7 @@ void Widget::onKeyPressed(int key)
     }
 }
 
- void Widget::genBlocks(int arr[0][9])
+ void Widget::genBlocks()
  {
      int i = 0;
      int j = 0;
@@ -464,14 +477,14 @@ void Widget::onKeyPressed(int key)
      {
          for(j = 0; j < 9; j++)
          {
-             arr[j][i] = 0;
+             blocksArr[j][i] = 0;
          }
      }
      for(i = 1; i < 9; i++)
      {
          for(j = 1; j < 9;j++)
          {
-             arr[j][i] = 5;
+             blocksArr[j][i] = 5;
          }
      }
  }
@@ -479,7 +492,7 @@ void Widget::onKeyPressed(int key)
 void Widget::on_start_clicked()
 {
        countLife = 3;
-       genBlocks(blocksArr);
+       genBlocks();
        idTimer = startTimer(20);
        ui->start->hide();
 }
@@ -491,7 +504,7 @@ void Widget::on_restart_clicked()
     ballY = bitaY  - ball->height();
     speedBallY *=-1;
     countLife = 3;
-    genBlocks(blocksArr);
+    genBlocks();
     idTimer = startTimer(20);
     ui->restart->hide();
 }

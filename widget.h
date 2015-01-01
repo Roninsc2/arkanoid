@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <math.h>
 #include <QMovie>
+#include <QVector>
 
 
 namespace Ui {
@@ -72,7 +73,7 @@ public:
     const int brickSW = 80;
     const int brickSH = 40;
     int idTimer;
-    int blocksArr[9][9];
+    QVector< QVector<int> > blocksArr;
     const int blackBrick = 5;
     int skipRot = 0;
 
@@ -88,7 +89,7 @@ private:
     bool eventFilter(QObject *, QEvent *e);
     void onKeyPressed(int key);
 
-    void genBlocks(int arr[0][9]);
+    void genBlocks();
 
 
 };
