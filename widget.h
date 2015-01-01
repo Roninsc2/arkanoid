@@ -25,16 +25,6 @@ public:
 
 private:
 
-    QMovie *points0;
-    QMovie *points1;
-    QMovie *points2;
-    QMovie *points3;
-    QMovie *points4;
-    QMovie *points5;
-    QMovie *points6;
-    QMovie *points7;
-    QMovie *points8;
-    QMovie *points9;
     Ui::Widget *ui;
     QImage *ball;
     QImage *bita;
@@ -68,12 +58,13 @@ public:
     float ballX = bitaX;
     float bitaY = 640;
     int ballY;
-    float speedBallX = 2;
-    float speedBallY = 2;
+    float speedBallX = 1;
+    float speedBallY = 1;
     const int brickSW = 80;
     const int brickSH = 40;
     int idTimer;
     QVector< QVector<int> > blocksArr;
+    QVector< QMovie *> points;
     const int blackBrick = 5;
     int skipRot = 0;
 
