@@ -31,11 +31,7 @@ private:
     QImage * low;
     QImage *mid;
     QImage * high;
-    QImage * brick;
-    QImage * brick2;
-    QImage * brick3;
-    QImage * brick4;
-    QImage * brick5;
+
 private:
     void paintEvent(QPaintEvent * );
 
@@ -46,9 +42,9 @@ public:
     void CountPoints(void);
     const int bitaWidth = 80;
     const int bitaHeight = 15;
-    unsigned int paintPointsMid = 0;
-    unsigned int paintPointsLeft = 0;
-    unsigned int paintPointsRigth = 0;
+    int paintPointsMid = 0;
+    int paintPointsLeft = 0;
+    int paintPointsRigth = 0;
     const int coordPointsX = 640;
     const int coordPointsY = 500;
     int countLife = 0;
@@ -67,6 +63,7 @@ public:
     QVector< QMovie *> points;
     const int blackBrick = 5;
     int skipRot = 0;
+    QVector< QImage *> bricks;
 
 private slots:
     void on_start_clicked();

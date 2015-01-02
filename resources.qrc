@@ -15,14 +15,14 @@
         <file>images/area.png</file>
         <file>images/ball.png</file>
         <file>images/Bita.bmp</file>
-        <file>images/brick.png</file>
+        <file>images/0_brick.png</file>
         <file>images/brick_1_1.png</file>
         <file>images/brick_1_2.png</file>
         <file>images/brick_1_3.png</file>
         <file>images/brick_1_4.png</file>
-        <file>images/brick_2.png</file>
-        <file>images/brick_3.png</file>
-        <file>images/brick_4.png</file>
-        <file>images/brick_5.png</file>
+        <file>images/1_brick.png</file>
+        <file>images/2_brick.png</file>
+        <file>images/3_brick.png</file>
+        <file>images/4_brick.png</file>
     </qresource>
 </RCC>
