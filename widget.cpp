@@ -16,13 +16,11 @@ Widget::Widget(QWidget *parent) :
     {
         blocksArr[i].resize(9);
     }
-    points.resize(10);
-    bricks.resize(5);
     std::string adress;
     for(i = 0; i < 10; i++)
     {
         adress = ":/images/"+std::to_string(i)+"_point.gif";
-        points[i] = new QMovie(adress.c_str());
+        points.push_back(new QMovie(adress.c_str()));
     }
     ball= new QImage;
     bita = new QImage;
@@ -31,11 +29,11 @@ Widget::Widget(QWidget *parent) :
     ui->restart->hide();
     ball->load(":/images/ball.png");
     bita->load(":/images/Bita.bmp");
-    int j = 0;
-    for(i = 4; i >= 0; i--, j++)
+    int j = 4;
+    for(i = 0; i < 5; i++, j--)
     {
 
-        bricks[i] = new QImage;
+        bricks.push_back(new QImage);
         adress = ":/images/"+std::to_string(j) + "_brick.png";
         bricks[i]->load(adress.c_str());
     }
@@ -45,13 +43,13 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     int i;
-    for(i = 0; i < 10; i++)
+    for(i = 0; i < points.size(); i++)
     {
         delete points[i];
     }
     delete ball;
     delete bita;
-    for(i = 0; i < 5; i++)
+    for(i = 0; i < bricks.size(); i++)
     {
         delete bricks[i];
     }
