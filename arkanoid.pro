@@ -13,9 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    ImageManager.cpp \
+    field.cpp \
+    drawer.cpp
 
-HEADERS  += widget.h
+HEADERS  += widget.h \
+    ImageManager.h \
+    field.h \
+    drawer.h
 
 FORMS    += widget.ui
 
