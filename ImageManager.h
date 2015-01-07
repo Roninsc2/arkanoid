@@ -8,15 +8,20 @@
 class ImageManager
 {
 public:
-   ImageManager();
-   ~ImageManager();
+    ImageManager();
+    ~ImageManager();
 
-public:
+private:
 
     QVector< QMovie *> points;
     QVector< QImage *> bricks;
     QImage *ball;
-    QImage *bita;
+
+public:
+
+    QMovie & GetPoint(int pointNum);
+    const QImage & GetBrick(int brickNum);
+    const QImage & GetBall();
 
 };
 

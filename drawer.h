@@ -3,8 +3,13 @@
 
 class Drawer
 {
+public:
+    Drawer(Field & _field, ImageManager & _image);
 
 public:
-    Field field;
-    void drawField(int countLife, QPainter & painter);
+    Field & field;
+    ImageManager & image;
+
+public:
+    void drawField(QPainter & painter);
 };

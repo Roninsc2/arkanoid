@@ -2,7 +2,8 @@
 #include "field.h"
 #include <algorithm>
 
-Field::Field()
+Field::Field(ImageManager & _image):
+    image(_image)
 {
     blocksArr.resize(9);
     for(int i = 0; i < 9; i++)
@@ -11,7 +12,7 @@ Field::Field()
     }
     bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
     ballX = bitaX;
-    ballY = bitaY - Image.ball->height();
+    ballY = bitaY - image.GetBall().height();
 }
 
 void Field::UpdateBallandBita()
@@ -32,8 +33,9 @@ int Field::CheckBorders()
     {
         bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
         ballX = bitaX;
-        ballY = bitaY  - Image.ball->height();
+        ballY = bitaY  - image.GetBall().height();
         speedBallY *=-1;
+        countLife--;
         return 1;
     }
     if (skipRot)
@@ -57,10 +59,10 @@ int Field::CheckBorders()
                 continue;
             }
 
-            if ((ballX - Image.ball->width()/2) < (brickRight + gapX*i) && (ballX + Image.ball->width()/2 >= brickLeft + gapX*i) && (brickBottom + gapY*j > ballY - Image.ball->height()/2 && ballY + Image.ball->height()/2>= brickTop + gapY*j))
+            if ((ballX - image.GetBall().width()/2) < (brickRight + gapX*i) && (ballX + image.GetBall().width()/2 >= brickLeft + gapX*i) && (brickBottom + gapY*j > ballY - image.GetBall().height()/2 && ballY + image.GetBall().height()/2>= brickTop + gapY*j))
             {
-                int distanceVert = std::min(abs(ballY + Image.ball->height()/2 - (brickTop + gapY*j)), abs(ballY - Image.ball->height()/2 - (brickBottom + gapY*j)));
-                int distanceHoriz = std::min(abs (ballX + Image.ball->width()/2- (brickLeft + gapX*i)), abs(ballX- Image.ball->width()/2- (brickRight + gapX*i)));
+                int distanceVert = std::min(abs(ballY + image.GetBall().height()/2 - (brickTop + gapY*j)), abs(ballY - image.GetBall().height()/2 - (brickBottom + gapY*j)));
+                int distanceHoriz = std::min(abs (ballX + image.GetBall().width()/2- (brickLeft + gapX*i)), abs(ballX- image.GetBall().width()/2- (brickRight + gapX*i)));
                 if(distanceVert < distanceHoriz)
                 {
                     speedBallY *=-1;
@@ -91,9 +93,9 @@ void Field::BallAngle(void)
 {
     if(ballX > widgetWidth || ballX < 0)
     {
-            speedBallX *= -1;
+        speedBallX *= -1;
     }
-    if((bitaX - bitaWidth /2 <= (ballX + Image.ball->width()/2)) && (bitaX + bitaWidth/2 >= (ballX - Image.ball->width()/2)) && (bitaY == (ballY + Image.ball->height() / 2)))
+    if((bitaX - bitaWidth /2 <= (ballX + image.GetBall().width()/2)) && (bitaX + bitaWidth/2 >= (ballX - image.GetBall().width()/2)) && (bitaY == (ballY + image.GetBall().height() / 2)))
     {
         speedBallY *= -1;
     }
@@ -106,25 +108,25 @@ void Field::BallAngle(void)
     }
 }
 
- void Field::genBlocks()
- {
-     int i = 0;
-     int j = 0;
-     for(i = 0; i < 9;i++)
-     {
-         for(j = 0; j < 9; j++)
-         {
-             blocksArr[j][i] = 0;
-         }
-     }
-     for(i = 1; i < 9; i++)
-     {
-         for(j = 1; j < 9;j++)
-         {
-             blocksArr[j][i] = 5;
-         }
-     }
- }
+void Field::genBlocks()
+{
+    int i = 0;
+    int j = 0;
+    for(i = 0; i < 9;i++)
+    {
+        for(j = 0; j < 9; j++)
+        {
+            blocksArr[j][i] = 0;
+        }
+    }
+    for(i = 1; i < 9; i++)
+    {
+        for(j = 1; j < 9;j++)
+        {
+            blocksArr[j][i] = 5;
+        }
+    }
+}
 
 void Field::CountPoints(void)
 {
@@ -147,5 +149,22 @@ void Field::CountPoints(void)
     {
         paintPointsRigth++;
     }
+}
+
+void Field::MoveBita(bool move)
+{
+    if(move == true)
+    {
+        bitaUpdate = 3;
+    }
+    else
+    {
+        bitaUpdate = -3;
+    }
+}
+
+void Field::StopMoveBita()
+{
+    bitaUpdate = 0;
 }
 

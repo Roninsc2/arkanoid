@@ -1,36 +1,38 @@
 #include "drawer.h"
 
+Drawer::Drawer(Field & _field, ImageManager & _image):
+    field(_field), image(_image){}
 
-void Drawer::drawField(int countLife, QPainter & painter)
+void Drawer::drawField(QPainter & painter)
 {
-    if(countLife)
+    if(field.countLife)
     {
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setBrush(Qt::blue);
         painter.setPen(Qt::blue);
-        painter.drawImage(field.ballX - field.Image.ball->width() / 2, field.ballY - field.Image.ball->height() / 2, *field.Image.ball, 0, 0, field.Image.ball->width(), field.Image.ball->height());
+        painter.drawImage(field.ballX - image.GetBall().width() / 2, field.ballY - image.GetBall().height() / 2, image.GetBall(), 0, 0, image.GetBall().width(), image.GetBall().height());
         painter.drawRect(field.bitaX - field.bitaWidth/2,field.bitaY-field.bitaHeight/2, field.bitaWidth, field.bitaHeight);
         for(int i = 0; i < 10; i++)
         {
             if(field.paintPointsMid == i)
             {
-                painter.drawPixmap(50,640,field.Image.points[i]->currentPixmap());
-                field.Image.points[i]->start();
+                painter.drawPixmap(50,640,image.GetPoint(i).currentPixmap());
+                image.GetPoint(i).start();
             }
             if(field.paintPointsLeft == i)
             {
-                painter.drawPixmap(10,640,field.Image.points[i]->currentPixmap());
-               field.Image.points[i]->start();
+                painter.drawPixmap(10,640,image.GetPoint(i).currentPixmap());
+                image.GetPoint(i).start();
             }
             if(field.paintPointsRigth == i)
             {
-                painter.drawPixmap(90,640,field.Image.points[i]->currentPixmap());
-                field.Image.points[i]->start();
+                painter.drawPixmap(90,640,image.GetPoint(i).currentPixmap());
+                image.GetPoint(i).start();
             }
         }
-        for(int i = 1; i <= countLife; i++)
+        for(int i = 1; i <= field.countLife; i++)
         {
-            painter.drawImage(i*12, field.Image.ball->height(), *field.Image.ball, 0, 0, field.Image.ball->width(), field.Image.ball->height());
+            painter.drawImage(i*12, image.GetBall().height(), image.GetBall(), 0, 0, image.GetBall().width(), image.GetBall().height());
         }
         int gapX = 40;
         int gapY  = 0;
@@ -44,7 +46,7 @@ void Drawer::drawField(int countLife, QPainter & painter)
                     {
                         if(field.blocksArr[i][j] == k)
                         {
-                             painter.drawImage(i*field.brickSW + gapX*i, j*field.brickSH + gapY*j, *field.Image.bricks[k-1], 0, 0, field.brickSW,field.brickSH);
+                            painter.drawImage(i*field.brickSW + gapX*i, j*field.brickSH + gapY*j, image.GetBrick(k-1), 0, 0, field.brickSW,field.brickSH);
                         }
                     }
 

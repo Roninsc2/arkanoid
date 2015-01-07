@@ -8,16 +8,17 @@
 class Field
 {
 
-public:
-    Field();
-
+private:
 
 public:
+    Field(ImageManager & _image);
 
-    ImageManager Image;
+
+public:
+
+    int countLife = 0;
+    ImageManager & image;
     int bitaUpdate = 0;
-    void BallAngle(void);
-    void CountPoints(void);
     const int bitaWidth = 80;
     const int bitaHeight = 15;
     int paintPointsMid = 0;
@@ -40,6 +41,10 @@ public:
 
 public:
 
+    void MoveBita(bool move);
+    void StopMoveBita();
+    void BallAngle(void);
+    void CountPoints(void);
     int CheckBorders();
     void UpdateBallandBita();
     void genBlocks();

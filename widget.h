@@ -1,4 +1,4 @@
-#ifndef WIDGET_H
+#ifndef WIDGET_
 #define WIDGET_H
 #include <QWidget>
 #include <QTimer>
@@ -14,16 +14,18 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
+    Ui::Widget *ui;
+    ImageManager Image;
+    Field MyField;
+    Drawer Draw;
+
+
+
+public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
-
 public:
-    Ui::Widget *ui;
-
-public:
-    Drawer draw;
-    int countLife = 0;
     int idTimer;
 
 public slots:

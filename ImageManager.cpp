@@ -11,12 +11,9 @@ ImageManager::ImageManager()
         points.push_back(new QMovie(adress.c_str()));
     }
     ball= new QImage;
-    bita = new QImage;
     ball->load(":/images/ball.png");
-    bita->load(":/images/Bita.bmp");
     for(i = 0; i < 5; i++)
     {
-
         bricks.push_back(new QImage);
         adress = ":/images/"+std::to_string(4-i) + "_brick.png";
         bricks[i]->load(adress.c_str());
@@ -31,9 +28,22 @@ ImageManager::~ImageManager()
         delete points[i];
     }
     delete ball;
-    delete bita;
     for(i = 0; i < bricks.size(); i++)
     {
         delete bricks[i];
     }
+}
+QMovie & ImageManager::GetPoint(int pointNum)
+{
+    return *points[pointNum];
+}
+
+const QImage & ImageManager::GetBrick(int brickNum)
+{
+    return *bricks[brickNum];
+}
+
+const QImage & ImageManager::GetBall()
+{
+    return *ball;
 }
