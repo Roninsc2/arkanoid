@@ -11,19 +11,19 @@ class Field
 private:
 
 public:
-    Field(ImageManager & _image);
+    Field(ImageManager &_image);
 
 
 public:
 
     int countLife = 0;
-    ImageManager & image;
+    ImageManager &image;
     int bitaUpdate = 0;
     const int bitaWidth = 80;
     const int bitaHeight = 15;
-    int paintPointsMid = 0;
-    int paintPointsLeft = 0;
-    int paintPointsRigth = 0;
+    int pointsMid = 0;
+    int pointsLeft = 0;
+    int pointsRigth = 0;
     const int coordPointsX = 640;
     const int coordPointsY = 500;
     const int widgetWidth = 1280;
@@ -34,20 +34,20 @@ public:
     int ballY;
     float speedBallX = 1;
     float speedBallY = 1;
-    const int brickSW = 80;
-    const int brickSH = 40;
-    QVector< QVector<int> > blocksArr;
+    const int brickWidth = 80;
+    const int brickHeight = 40;
+    QVector< QVector<int> > blocksArray;
     int skipRot = 0;
 
 public:
 
     void MoveBita(bool move);
-    void StopMoveBita();
+    void StopMoveBita(void);
     void BallAngle(void);
     void CountPoints(void);
-    int CheckBorders();
-    void UpdateBallandBita();
-    void genBlocks();
+    int CheckBorders(void);
+    void UpdateBallandBita(void);
+    void GenerationBlocks(void);
 
 };
 

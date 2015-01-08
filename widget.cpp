@@ -47,7 +47,7 @@ bool Widget::eventFilter(QObject *, QEvent *e)
 {
     if (e->type() == QEvent::KeyPress)
     {
-        onKeyPressed(((QKeyEvent*)e)->key());
+        OnKeyPressed(((QKeyEvent*)e)->key());
         return true;
     }
     if (e->type() == QEvent::KeyRelease)
@@ -59,7 +59,7 @@ bool Widget::eventFilter(QObject *, QEvent *e)
 }
 
 
-void  Widget::onKeyPressed(int key)
+void  Widget::OnKeyPressed(int key)
 {
     if (key == Qt::Key_Right)
     {
@@ -74,7 +74,7 @@ void  Widget::onKeyPressed(int key)
 void Widget::on_start_clicked()
 {
     MyField.countLife = 3;
-    MyField.genBlocks();
+    MyField.GenerationBlocks();
     idTimer = startTimer(10);
     ui->start->hide();
 }
@@ -85,11 +85,11 @@ void Widget::on_restart_clicked()
     MyField.ballX = MyField.bitaX;
     MyField.ballY = MyField.bitaY  - Image.GetBall().height();
     MyField.speedBallY *=-1;
-    MyField.paintPointsMid = 0;
-    MyField.paintPointsLeft = 0;
-    MyField.paintPointsRigth = 0;
+    MyField.pointsMid = 0;
+    MyField.pointsLeft = 0;
+    MyField.pointsRigth = 0;
     MyField.countLife = 3;
-    MyField.genBlocks();
+    MyField.GenerationBlocks();
     idTimer = startTimer(10);
     ui->restart->hide();
 }

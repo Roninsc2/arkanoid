@@ -35,9 +35,9 @@ public slots:
 
 public:
     void timerEvent(QTimerEvent *);
-    void paintEvent(QPaintEvent * );
+    void paintEvent(QPaintEvent *);
     bool eventFilter(QObject *, QEvent *e);
-    void onKeyPressed(int key);
+    void OnKeyPressed(int key);
 
 
 };
