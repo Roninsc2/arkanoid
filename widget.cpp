@@ -14,16 +14,19 @@ Widget::Widget(QWidget *parent):
     ui->restart->hide();
 }
 
-Widget::~Widget() {
+Widget::~Widget()
+{
     delete ui;
 }
 
-void Widget::paintEvent(QPaintEvent*) {
+void Widget::paintEvent(QPaintEvent*)
+{
     QPainter painter(this);
     Draw.drawField(painter);
 }
 
-void Widget::timerEvent(QTimerEvent *) {
+void Widget::timerEvent(QTimerEvent *)
+{
     MyField.updateBallandBita();
     if( MyField.checkBorders() ) {
         killTimer( idTimer );
@@ -37,7 +40,8 @@ void Widget::timerEvent(QTimerEvent *) {
     update();
 }
 
-bool Widget::eventFilter(QObject *, QEvent *e) {
+bool Widget::eventFilter(QObject *, QEvent *e)
+{
     if (e->type() == QEvent::KeyPress) {
         onKeyPressed(((QKeyEvent*)e)->key());
         return true;
@@ -50,7 +54,8 @@ bool Widget::eventFilter(QObject *, QEvent *e) {
 }
 
 
-void  Widget::onKeyPressed(int key) {
+void  Widget::onKeyPressed(int key)
+{
     if (key == Qt::Key_Right) {
         MyField.moveBita(true);
     }
@@ -59,14 +64,16 @@ void  Widget::onKeyPressed(int key) {
     }
 }
 
-void Widget::on_start_clicked() {
+void Widget::on_start_clicked()
+{
     MyField.countLife = 3;
     MyField.generationBlocks();
     idTimer = startTimer(10);
     ui->start->hide();
 }
 
-void Widget::on_restart_clicked() {
+void Widget::on_restart_clicked()
+{
     MyField.bitaX = rand() % (MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
     MyField.ballX = MyField.bitaX;
     MyField.ballY = MyField.bitaY  - Image.getBall().height();

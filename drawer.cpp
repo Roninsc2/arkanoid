@@ -3,7 +3,8 @@
 TDrawer::TDrawer(TField &_field, TImageManager &_image):
     field(_field), image(_image){}
 
-void TDrawer::drawField(QPainter &painter) {
+void TDrawer::drawField(QPainter &painter)
+{
     if(field.countLife) {
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setBrush(Qt::blue);

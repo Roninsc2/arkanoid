@@ -14,13 +14,15 @@ TField::TField(TImageManager &_image):
     ballY = bitaY - image.getBall().height();
 }
 
-void TField::updateBallandBita() {
+void TField::updateBallandBita()
+{
     ballX += speedBallX;
     ballY -= speedBallY;
     bitaX = std::min(std::max(bitaX + bitaUpdate, bitaWidth/2), widgetWidth - bitaWidth/2);
 }
 
-int TField::checkBorders() {
+int TField::checkBorders()
+{
     if(skipRot > 0) {
         skipRot--;
     }
@@ -82,7 +84,8 @@ int TField::checkBorders() {
     return 0;
 }
 
-void TField::ballAngle(void) {
+void TField::ballAngle(void)
+{
     if(ballX > widgetWidth || ballX < 0) {
         speedBallX *= -1;
     }
@@ -99,7 +102,8 @@ void TField::ballAngle(void) {
     }
 }
 
-void TField::generationBlocks(void) {
+void TField::generationBlocks(void)
+{
     int i = 0;
     int j = 0;
     for(i = 0; i < 9;i++) {
@@ -114,7 +118,8 @@ void TField::generationBlocks(void) {
     }
 }
 
-void TField::countPoints (void) {
+void TField::countPoints (void)
+{
     if(pointsRigth == 9) {
         if(pointsMid == 9) {
             pointsMid = 0;
@@ -132,7 +137,8 @@ void TField::countPoints (void) {
     }
 }
 
-void TField::moveBita(bool move) {
+void TField::moveBita(bool move)
+{
     if(move == true) {
         bitaUpdate = 3;
     }
@@ -141,7 +147,8 @@ void TField::moveBita(bool move) {
     }
 }
 
-void TField::stopMoveBita() {
+void TField::stopMoveBita()
+{
     bitaUpdate = 0;
 }
 

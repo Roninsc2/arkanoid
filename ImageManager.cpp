@@ -1,7 +1,8 @@
 #include "ImageManager.h"
 #include <string>
 
-TImageManager::TImageManager() {
+TImageManager::TImageManager()
+{
     int i;
     std::string adress;
     for(i = 0; i < 10; i++) {
@@ -17,7 +18,8 @@ TImageManager::TImageManager() {
     }
 }
 
-TImageManager::~TImageManager() {
+TImageManager::~TImageManager()
+{
     int i;
     for(i = 0; i < points.size(); i++) {
         delete points[i];
@@ -27,14 +29,17 @@ TImageManager::~TImageManager() {
         delete bricks[i];
     }
 }
-QMovie & TImageManager::getPoint(int pointNum) {
+QMovie & TImageManager::getPoint(int pointNum)
+{
     return *points[pointNum];
 }
 
-const QImage & TImageManager::getBrick(int brickNum) {
+const QImage & TImageManager::getBrick(int brickNum)
+{
     return *bricks[brickNum];
 }
 
-const QImage & TImageManager::getBall() {
+const QImage & TImageManager::getBall()
+{
     return *ball;
 }
