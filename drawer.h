@@ -1,15 +1,13 @@
 #include <QPainter>
 #include "field.h"
 
-class Drawer
+class TDrawer
 {
 public:
-    Drawer(Field &_field, ImageManager &_image);
-
-public:
-    Field &field;
-    ImageManager &image;
-
-public:
+    TDrawer(TField &_field, TImageManager &_image);
     void drawField(QPainter &painter);
+
+public:
+    TField &field;
+    TImageManager &image;
 };

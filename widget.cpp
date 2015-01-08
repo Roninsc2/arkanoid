@@ -14,82 +14,68 @@ Widget::Widget(QWidget *parent):
     ui->restart->hide();
 }
 
-Widget::~Widget()
-{
+Widget::~Widget() {
     delete ui;
 }
 
-void Widget::paintEvent(QPaintEvent*)
-{
+void Widget::paintEvent(QPaintEvent*) {
     QPainter painter(this);
     Draw.drawField(painter);
 }
 
-void Widget::timerEvent(QTimerEvent *)
-{
-    MyField.UpdateBallandBita();
-    if(MyField.CheckBorders())
-    {
-        killTimer(idTimer);
-        if(MyField.countLife)
-        {
+void Widget::timerEvent(QTimerEvent *) {
+    MyField.updateBallandBita();
+    if( MyField.checkBorders() ) {
+        killTimer( idTimer );
+        if( MyField.countLife ) {
             idTimer = startTimer(10);
         }
-        else
-        {
+        else {
             ui->restart->show();
         }
     }
     update();
 }
 
-bool Widget::eventFilter(QObject *, QEvent *e)
-{
-    if (e->type() == QEvent::KeyPress)
-    {
-        OnKeyPressed(((QKeyEvent*)e)->key());
+bool Widget::eventFilter(QObject *, QEvent *e) {
+    if (e->type() == QEvent::KeyPress) {
+        onKeyPressed(((QKeyEvent*)e)->key());
         return true;
     }
-    if (e->type() == QEvent::KeyRelease)
-    {
-        MyField.StopMoveBita();
+    if (e->type() == QEvent::KeyRelease) {
+        MyField.stopMoveBita();
         return true;
     }
     return false;
 }
 
 
-void  Widget::OnKeyPressed(int key)
-{
-    if (key == Qt::Key_Right)
-    {
-        MyField.MoveBita(true);
+void  Widget::onKeyPressed(int key) {
+    if (key == Qt::Key_Right) {
+        MyField.moveBita(true);
     }
-    if (key == Qt::Key_Left)
-    {
-        MyField.MoveBita(false);
+    if (key == Qt::Key_Left) {
+        MyField.moveBita(false);
     }
 }
 
-void Widget::on_start_clicked()
-{
+void Widget::on_start_clicked() {
     MyField.countLife = 3;
-    MyField.GenerationBlocks();
+    MyField.generationBlocks();
     idTimer = startTimer(10);
     ui->start->hide();
 }
 
-void Widget::on_restart_clicked()
-{
+void Widget::on_restart_clicked() {
     MyField.bitaX = rand() % (MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
     MyField.ballX = MyField.bitaX;
-    MyField.ballY = MyField.bitaY  - Image.GetBall().height();
+    MyField.ballY = MyField.bitaY  - Image.getBall().height();
     MyField.speedBallY *=-1;
     MyField.pointsMid = 0;
     MyField.pointsLeft = 0;
     MyField.pointsRigth = 0;
     MyField.countLife = 3;
-    MyField.GenerationBlocks();
+    MyField.generationBlocks();
     idTimer = startTimer(10);
     ui->restart->hide();
 }

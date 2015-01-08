@@ -5,23 +5,20 @@
 #include <QVector>
 
 
-class ImageManager
+class TImageManager
 {
 public:
-    ImageManager();
-    ~ImageManager();
+    TImageManager();
+    ~TImageManager();
+    QMovie &getPoint(int pointNum);
+    const QImage &getBrick(int brickNum);
+    const QImage &getBall();
 
 private:
 
     QVector< QMovie *> points;
     QVector< QImage *> bricks;
     QImage *ball;
-
-public:
-
-    QMovie & GetPoint(int pointNum);
-    const QImage & GetBrick(int brickNum);
-    const QImage & GetBall();
 
 };
 

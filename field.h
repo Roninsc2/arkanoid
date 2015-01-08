@@ -5,19 +5,24 @@
 #include <math.h>
 #include "ImageManager.h"
 
-class Field
+class TField
 {
 
-private:
-
 public:
-    Field(ImageManager &_image);
+    TField(TImageManager &_image);
+    void moveBita(bool move);
+    void stopMoveBita(void);
+    void ballAngle(void);
+    void countPoints(void);
+    int checkBorders(void);
+    void updateBallandBita(void);
+    void generationBlocks(void);
 
 
 public:
 
     int countLife = 0;
-    ImageManager &image;
+    TImageManager &image;
     int bitaUpdate = 0;
     const int bitaWidth = 80;
     const int bitaHeight = 15;
@@ -38,16 +43,6 @@ public:
     const int brickHeight = 40;
     QVector< QVector<int> > blocksArray;
     int skipRot = 0;
-
-public:
-
-    void MoveBita(bool move);
-    void StopMoveBita(void);
-    void BallAngle(void);
-    void CountPoints(void);
-    int CheckBorders(void);
-    void UpdateBallandBita(void);
-    void GenerationBlocks(void);
 
 };
 
