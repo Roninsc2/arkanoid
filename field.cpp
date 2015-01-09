@@ -1,13 +1,12 @@
-#include "ImageManager.h"
 #include "field.h"
 #include <algorithm>
 
 TField::TField(TImageManager &_image):
     image(_image)
 {
-    blocksArray.resize(9);
-    for(int i = 0; i < 9; i++) {
-        blocksArray[i].resize(9);
+    blocksArray.resize(blocksArrayHeight);
+    for(int i = 0; i < blocksArrayHeight; i++) {
+        blocksArray[i].resize(blocksArrayWidth);
     }
     bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
     ballX = bitaX;
@@ -40,28 +39,26 @@ int TField::checkBorders()
     }
     int i = 0;
     int j = 0;
-    int gapX = 40;
-    int gapY  = 0;
-    for(i = 0; i < 9; i++) {
-        for(j = 0; j < 9; j++) {
-            int brickLeft = i*brickWidth;
-            int brickTop = j * brickHeight;
+    for(i = 0; i < blocksArrayHeight;i++) {
+        for(j = 0; j < blocksArrayWidth; j++) {
+            int brickLeft = j*brickWidth;
+            int brickTop =  i* brickHeight;
             int brickRight = brickLeft + brickWidth;
             int brickBottom = brickTop + brickHeight;
 
-            if (!blocksArray[i][j]) {
+            if (!blocksArray[j][i]) {
                 continue;
             }
 
-            if (((ballX - image.getBall().width()/2) < (brickRight + gapX*i)) &&
-                    ((ballX + image.getBall().width()/2) >= (brickLeft + gapX*i)) &&
-                    ((brickBottom + gapY*j) > (ballY - image.getBall().height()/2)) &&
-                     ((ballY + image.getBall().height()/2)>= (brickTop + gapY*j)))
+            if (((ballX - image.getBall().width()/2) < (brickRight)) &&
+                    ((ballX + image.getBall().width()/2) >= (brickLeft)) &&
+                    ((brickBottom) > (ballY - image.getBall().height()/2)) &&
+                     ((ballY + image.getBall().height()/2)>= (brickTop)))
             {
-                int distanceVert = std::min(abs(ballY + image.getBall().height()/2 - (brickTop + gapY*j)),
-                                            abs(ballY - image.getBall().height()/2 - (brickBottom + gapY*j)));
-                int distanceHoriz = std::min(abs (ballX + image.getBall().width()/2- (brickLeft + gapX*i)),
-                                             abs(ballX- image.getBall().width()/2- (brickRight + gapX*i)));
+                int distanceVert = std::min(abs(ballY + image.getBall().height()/2 - (brickTop)),
+                                            abs(ballY - image.getBall().height()/2 - (brickBottom)));
+                int distanceHoriz = std::min(abs (ballX + image.getBall().width()/2- (brickLeft)),
+                                             abs(ballX- image.getBall().width()/2- (brickRight)));
                 if(distanceVert < distanceHoriz) {
                     speedBallY *=-1;
                 }
@@ -75,7 +72,7 @@ int TField::checkBorders()
                     }
                 }
                 countPoints();
-                blocksArray[i][j]--;
+                blocksArray[j][i]--;
                 skipRot = 4;
                 break;
             }
@@ -102,20 +99,21 @@ void TField::ballAngle(void)
     }
 }
 
-void TField::generationBlocks(void)
+void TField::generationBlocks()
 {
+    std::ifstream field;
+    std::string adress = "/home/viktor/Documents/Games/arkanoid-master/levels/"+std::to_string(level)+"_level.txt";
+    field.open(adress.c_str());
     int i = 0;
     int j = 0;
-    for(i = 0; i < 9;i++) {
-        for(j = 0; j < 9; j++) {
-            blocksArray[j][i] = 0;
+    int temp = 0;
+    for(i = 0; i <  blocksArrayHeight; i++) {
+        for(j = 0; j < blocksArrayWidth; j++) {
+            field >> temp;
+            blocksArray[j][i] = temp;
         }
     }
-    for(i = 1; i < 9; i++) {
-        for(j = 1; j < 9;j++) {
-            blocksArray[j][i] = 5;
-        }
-    }
+    field.close();
 }
 
 void TField::countPoints (void)

@@ -66,6 +66,7 @@ void  Widget::onKeyPressed(int key)
 
 void Widget::on_start_clicked()
 {
+    MyField.level = 0;
     MyField.countLife = 3;
     MyField.generationBlocks();
     idTimer = startTimer(10);
@@ -74,6 +75,7 @@ void Widget::on_start_clicked()
 
 void Widget::on_restart_clicked()
 {
+    MyField.level = 0;
     MyField.bitaX = rand() % (MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
     MyField.ballX = MyField.bitaX;
     MyField.ballY = MyField.bitaY  - Image.getBall().height();

@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <math.h>
 #include "ImageManager.h"
+#include <fstream>
 
 class TField
 {
@@ -16,11 +17,12 @@ public:
     void countPoints(void);
     int checkBorders(void);
     void updateBallandBita(void);
-    void generationBlocks(void);
+    void generationBlocks();
 
 
 public:
 
+    int level = 0;
     int countLife = 0;
     TImageManager &image;
     int bitaUpdate = 0;
@@ -42,6 +44,8 @@ public:
     const int brickWidth = 80;
     const int brickHeight = 40;
     QVector< QVector<int> > blocksArray;
+    const int blocksArrayHeight = 15;
+    const int blocksArrayWidth = 15;
     int skipRot = 0;
 
 };

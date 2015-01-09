@@ -1,5 +1,4 @@
 #include "ImageManager.h"
-#include <string>
 
 TImageManager::TImageManager()
 {
