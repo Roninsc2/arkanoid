@@ -33,11 +33,9 @@ void TDrawer::drawField(QPainter &painter)
             painter.drawImage(i*12, image.getBall().height(), image.getBall(),
                               0, 0, image.getBall().width(), image.getBall().height());
         }
-        int count = 0;
         for(int i = 0; i < field.blocksArrayHeight; i++) {
             for(int j = 0; j < field.blocksArrayWidth; j++) {
                 if( field.blocksArray[j][i] ) {
-                    count = 1;
                     for(int k = 5; k >= 1; k--) {
                         if(field.blocksArray[j][i] == k) {
                             painter.drawImage((j*field.brickWidth), (i*field.brickHeight),
@@ -48,10 +46,6 @@ void TDrawer::drawField(QPainter &painter)
                 }
 
             }
-        }
-        if(!count)
-        {
-            field.level++;
         }
     }
 }

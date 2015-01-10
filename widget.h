@@ -34,6 +34,8 @@ public:
     TDrawer Draw;
 
 
+private slots:
+    void on_nextLevel_clicked();
 };
 
 #endif // WIDGET_H

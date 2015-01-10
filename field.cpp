@@ -1,5 +1,6 @@
 #include "field.h"
 #include <algorithm>
+#include <iostream>
 
 TField::TField(TImageManager &_image):
     image(_image)
@@ -22,9 +23,6 @@ void TField::updateBallandBita()
 
 int TField::checkBorders()
 {
-    if(skipRot > 0) {
-        skipRot--;
-    }
     ballAngle();
     if(ballY == widgetHeight) {
         bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
@@ -33,9 +31,6 @@ int TField::checkBorders()
         speedBallY *=-1;
         countLife--;
         return 1;
-    }
-    if (skipRot) {
-        return 0;
     }
     int i = 0;
     int j = 0;
@@ -46,18 +41,17 @@ int TField::checkBorders()
             int brickRight = brickLeft + brickWidth;
             int brickBottom = brickTop + brickHeight;
 
-            if (!blocksArray[j][i]) {
+            if(!blocksArray[j][i]) {
                 continue;
             }
-
             if (((ballX - image.getBall().width()/2) < (brickRight)) &&
                     ((ballX + image.getBall().width()/2) >= (brickLeft)) &&
                     ((brickBottom) > (ballY - image.getBall().height()/2)) &&
                      ((ballY + image.getBall().height()/2)>= (brickTop)))
             {
-                int distanceVert = std::min(abs(ballY + image.getBall().height()/2 - (brickTop)),
+                float distanceVert = std::min(abs(ballY + image.getBall().height()/2 - (brickTop)),
                                             abs(ballY - image.getBall().height()/2 - (brickBottom)));
-                int distanceHoriz = std::min(abs (ballX + image.getBall().width()/2- (brickLeft)),
+                float distanceHoriz = std::min(abs (ballX + image.getBall().width()/2- (brickLeft)),
                                              abs(ballX- image.getBall().width()/2- (brickRight)));
                 if(distanceVert < distanceHoriz) {
                     speedBallY *=-1;
@@ -73,10 +67,18 @@ int TField::checkBorders()
                 }
                 countPoints();
                 blocksArray[j][i]--;
-                skipRot = 4;
-                break;
+                if(blocksArray[i][j] == 0)
+                {
+                    blocksCount--;
+                }
+                return 0;
             }
         }
+    }
+    if(blocksCount == 0)
+    {
+
+        return 1;
     }
     return 0;
 }
@@ -101,15 +103,19 @@ void TField::ballAngle(void)
 
 void TField::generationBlocks()
 {
+    std::string adress = "levels/"+std::to_string(level) + "_level.txt";
     std::ifstream field;
-    std::string adress = "/home/viktor/Documents/Games/arkanoid-master/levels/"+std::to_string(level)+"_level.txt";
-    field.open(adress.c_str());
+    field.open(adress);
     int i = 0;
     int j = 0;
     int temp = 0;
     for(i = 0; i <  blocksArrayHeight; i++) {
         for(j = 0; j < blocksArrayWidth; j++) {
             field >> temp;
+            if(temp !=  0)
+            {
+                blocksCount++;
+            }
             blocksArray[j][i] = temp;
         }
     }

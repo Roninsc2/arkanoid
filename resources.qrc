@@ -24,6 +24,7 @@
         <file>images/2_brick.png</file>
         <file>images/3_brick.png</file>
         <file>images/4_brick.png</file>
+        <file>levels/1_level.txt</file>
         <file>levels/0_level.txt</file>
     </qresource>
 </RCC>

@@ -12,6 +12,7 @@ Widget::Widget(QWidget *parent):
     QApplication::instance()->installEventFilter(this);
     ui->setupUi(this);
     ui->restart->hide();
+    ui->nextLevel->hide();
 }
 
 Widget::~Widget()
@@ -30,11 +31,21 @@ void Widget::timerEvent(QTimerEvent *)
     MyField.updateBallandBita();
     if( MyField.checkBorders() ) {
         killTimer( idTimer );
-        if( MyField.countLife ) {
+        if( MyField.countLife && MyField.blocksCount ) {
             idTimer = startTimer(10);
         }
         else {
-            ui->restart->show();
+            if(MyField.blocksCount == 0) {
+                ui->nextLevel->show();
+            }
+            else {
+                if(MyField.countLife) {
+                    idTimer = startTimer(10);
+                }
+                else {
+                    ui->restart->show();
+                }
+            }
         }
     }
     update();
@@ -66,7 +77,7 @@ void  Widget::onKeyPressed(int key)
 
 void Widget::on_start_clicked()
 {
-    MyField.level = 0;
+    MyField.level = -1;
     MyField.countLife = 3;
     MyField.generationBlocks();
     idTimer = startTimer(10);
@@ -87,4 +98,12 @@ void Widget::on_restart_clicked()
     MyField.generationBlocks();
     idTimer = startTimer(10);
     ui->restart->hide();
+}
+
+void Widget::on_nextLevel_clicked()
+{
+    MyField.level += 1;
+    MyField.generationBlocks();
+    idTimer = startTimer(10);
+    ui->nextLevel->hide();
 }

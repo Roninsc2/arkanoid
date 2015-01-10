@@ -22,7 +22,8 @@ public:
 
 public:
 
-    int level = 0;
+    int blocksCount = 0;
+    int level = 1;
     int countLife = 0;
     TImageManager &image;
     int bitaUpdate = 0;
