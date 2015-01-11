@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         widget.cpp \
     ImageManager.cpp \
     field.cpp \
-    drawer.cpp
+    drawer.cpp \
+    sound.cpp
 
 HEADERS  += widget.h \
     ImageManager.h \
     field.h \
-    drawer.h
+    drawer.h \
+    sound.h
 
 FORMS    += widget.ui
 

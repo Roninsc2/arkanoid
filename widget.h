@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QTimer>
 #include "drawer.h"
+#include "sound.h"
 
 
 namespace Ui {
@@ -30,6 +31,7 @@ public:
     int idTimer;
     Ui::Widget *ui;
     TImageManager Image;
+    TSound Sound;
     TField MyField;
     TDrawer Draw;
 

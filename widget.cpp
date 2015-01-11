@@ -6,7 +6,7 @@
 Widget::Widget(QWidget *parent):
     QWidget(parent),
     ui(new Ui::Widget),
-    MyField(Image),
+    MyField(Image, Sound),
     Draw(MyField, Image)
 {
     QApplication::instance()->installEventFilter(this);
@@ -32,7 +32,7 @@ void Widget::timerEvent(QTimerEvent *)
     if( MyField.checkBorders() ) {
         killTimer( idTimer );
         if( MyField.countLife && MyField.blocksCount ) {
-            idTimer = startTimer(10);
+            idTimer = startTimer(15);
         }
         else {
             if(MyField.blocksCount == 0) {
@@ -40,7 +40,7 @@ void Widget::timerEvent(QTimerEvent *)
             }
             else {
                 if(MyField.countLife) {
-                    idTimer = startTimer(10);
+                    idTimer = startTimer(15);
                 }
                 else {
                     ui->restart->show();
@@ -80,14 +80,14 @@ void Widget::on_start_clicked()
     MyField.level = -1;
     MyField.countLife = 3;
     MyField.generationBlocks();
-    idTimer = startTimer(10);
+    idTimer = startTimer(15);
     ui->start->hide();
 }
 
 void Widget::on_restart_clicked()
 {
     MyField.level = 0;
-    MyField.bitaX = rand() % (MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
+    MyField.bitaX = rand() % (int)(MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
     MyField.ballX = MyField.bitaX;
     MyField.ballY = MyField.bitaY  - Image.getBall().height();
     MyField.speedBallY *=-1;
@@ -96,7 +96,7 @@ void Widget::on_restart_clicked()
     MyField.pointsRigth = 0;
     MyField.countLife = 3;
     MyField.generationBlocks();
-    idTimer = startTimer(10);
+    idTimer = startTimer(15);
     ui->restart->hide();
 }
 
