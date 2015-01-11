@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 
+const float PI = 3.14;
+
 TField::TField(TImageManager &_image, TSound &_sound):
     image(_image),
     sound(_sound)
@@ -85,6 +87,22 @@ int TField::checkBorders()
     return 0;
 }
 
+float calcFallAngle(float x, float y) {
+    if (x > 0) {
+        return atan(y / x);
+    }
+    if (x < 0 && y >= 0) {
+        return atan(y / x) + PI;
+    }
+    if (x < 0 && y < 0) {
+        return atan(y / x) - PI;
+    }
+    if (x == 0 && y > 0) {
+        return PI / 2;
+    }
+    return -PI / 2;
+}
+
 void TField::ballAngle(void)
 {
     if (bitaHitTtl > 0) {
@@ -99,7 +117,36 @@ void TField::ballAngle(void)
             (ballY + image.getBall().height() / 2 <= bitaY + bitaHeight / 2) &&
               (ballY + image.getBall().height() / 2 >= bitaY - bitaHeight / 2) && bitaHitTtl == 0)
     {
-        speedBallY *= -1;
+        // Определяем угол падения
+        float fallAngle = calcFallAngle(speedBallX, speedBallY);
+
+        // 1) угол падения равен углу отражения:
+        float resAngle = fabs(fallAngle);
+
+        // 2) если бита двигается - поворачиваем угол в сторону движения:
+        if (bitaSpeedX > 0) {
+            resAngle -= 1.4;
+        } else if (bitaSpeedX < 0) {
+            resAngle += 1.4;
+        } else {
+            // 3) если бита стоит - поварачиваем угол в зависимости от части биты:
+            resAngle += 1.5 * (bitaX - ballX) / (bitaWidth / 2);
+        }
+
+        // Не даем шарику отразится вниз
+        if (resAngle < 0.2 && resAngle > -1.57) {
+            resAngle = 0.2;
+        }
+        if (resAngle > 2.65) {
+            resAngle = 2.65;
+        }
+
+        // Считаем новую скорость биты
+        float absBallSpeed = sqrt(speedBallX * speedBallX + speedBallY * speedBallY);
+
+        speedBallX = absBallSpeed * cos(resAngle);
+        speedBallY = absBallSpeed * sin(resAngle);
+
         sound.onBitaHit();
         bitaHitTtl = 15;
     }
