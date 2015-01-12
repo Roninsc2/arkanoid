@@ -19,43 +19,46 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QPushButton" name="restart">
+  <widget class="QLabel" name="start">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>390</y>
-     <width>331</width>
+     <x>470</x>
+     <y>270</y>
+     <width>281</width>
      <height>111</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Restart The Game</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="start">
-   <property name="geometry">
-    <rect>
-     <x>478</x>
-     <y>390</y>
-     <width>331</width>
-     <height>111</height>
-    </rect>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/10_points.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="text">
-    <string>Start The Game</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/10_points.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="nextLevel">
+  <widget class="QLabel" name="restart">
    <property name="geometry">
     <rect>
-     <x>478</x>
-     <y>310</y>
-     <width>331</width>
+     <x>520</x>
+     <y>290</y>
+     <width>171</width>
      <height>81</height>
     </rect>
    </property>
    <property name="text">
-    <string>Next Level</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/area.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nextLevel">
+   <property name="geometry">
+    <rect>
+     <x>326</x>
+     <y>310</y>
+     <width>251</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/40_points.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>

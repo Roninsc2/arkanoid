@@ -23,6 +23,9 @@ public:
     void onKeyPressed(int key);
     void onShiftPressed();
     void onSpacePressed();
+    void startGame();
+    void restartGame();
+    void nextLevel();
 
 public:
     int idTimer;
@@ -31,13 +34,6 @@ public:
     TSound Sound;
     TField MyField;
     TDrawer Draw;
-
-private slots:
-    void on_nextLevel_clicked();
-
-    void on_start_clicked();
-
-    void on_restart_clicked();
 };
 
 #endif // WIDGET_H

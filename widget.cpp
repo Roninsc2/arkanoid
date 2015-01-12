@@ -73,18 +73,33 @@ void  TWidget::onKeyPressed(int key)
     if (key == Qt::Key_Left) {
         MyField.moveBita(false);
     }
+    if(key == Qt::Key_Space)
+    {
+        if(ui->start->isVisible())
+        {
+            startGame();
+        }
+        if(ui->nextLevel->isVisible())
+        {
+            nextLevel();
+        }
+        if(ui->restart->isVisible())
+        {
+            restartGame();
+        }
+    }
 }
 
-void TWidget::on_start_clicked()
+void TWidget::startGame()
 {
-    MyField.level = -1;
+    MyField.level = 0;
     MyField.countLife = 3;
     MyField.generationBlocks();
     idTimer = startTimer(10);
     ui->start->hide();
 }
 
-void TWidget::on_restart_clicked()
+void TWidget::restartGame()
 {
     MyField.level = 0;
     MyField.bitaX = rand() % (int)(MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
@@ -100,8 +115,11 @@ void TWidget::on_restart_clicked()
     ui->restart->hide();
 }
 
-void TWidget::on_nextLevel_clicked()
+void TWidget::nextLevel()
 {
+    MyField.bitaX = rand() % (int)(MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
+    MyField.ballX = MyField.bitaX;
+    MyField.ballY = MyField.bitaY  - Image.getBall().height();
     MyField.level += 1;
     MyField.generationBlocks();
     idTimer = startTimer(10);

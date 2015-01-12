@@ -46,8 +46,6 @@ public:
     float speedBallY = 1.4;
     const int brickWidth = 80;
     const int brickHeight = 40;
-    int ballWidth = 12;
-    int ballHeight = 12;
     QVector< QVector<int> > blocksArray;
     QVector< QVector<int> > blocksTtl;
     const int blocksArrayHeight = 15;
