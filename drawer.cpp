@@ -6,6 +6,7 @@ TDrawer::TDrawer(TField &_field, TImageManager &_image):
 void TDrawer::drawField(QPainter &painter)
 {
     if(field.countLife) {
+        //painter.fillRect(0, 0, field.widgetWidth, field.widgetHeight, Qt::white);
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setBrush(Qt::blue);
         painter.setPen(Qt::blue);

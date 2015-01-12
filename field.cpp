@@ -2,32 +2,37 @@
 #include <algorithm>
 #include <iostream>
 
-TField::TField(TImageManager &_image):
-    image(_image)
+const float PI = 3.14159;
+
+TField::TField(TImageManager &_image, TSound &_sound):
+    image(_image),
+    sound(_sound)
 {
     blocksArray.resize(blocksArrayHeight);
+    blocksTtl.resize(blocksArrayHeight);
     for(int i = 0; i < blocksArrayHeight; i++) {
         blocksArray[i].resize(blocksArrayWidth);
+        blocksTtl[i].resize(blocksArrayWidth);
     }
-    bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
+    bitaX = rand() % (int)(widgetWidth - bitaWidth) + bitaWidth;
     ballX = bitaX;
-    ballY = bitaY - image.getBall().height();
+    ballY = bitaY - bitaHeight / 2  - image.getBall().height() / 2;
 }
 
 void TField::updateBallandBita()
 {
     ballX += speedBallX;
     ballY -= speedBallY;
-    bitaX = std::min(std::max(bitaX + bitaUpdate, bitaWidth/2), widgetWidth - bitaWidth/2);
+    bitaX = std::min(std::max(bitaX + bitaSpeedX, (float)bitaWidth/2), (float)widgetWidth - bitaWidth/2);
 }
 
 int TField::checkBorders()
 {
     ballAngle();
-    if(ballY == widgetHeight) {
-        bitaX = rand() % (widgetWidth - bitaWidth) + bitaWidth;
+    if(ballY > widgetHeight - 1.4 && ballY < widgetHeight + 1.4) {
+        bitaX = rand() % (int)(widgetWidth - bitaWidth) + bitaWidth;
         ballX = bitaX;
-        ballY = bitaY  - image.getBall().height();
+        ballY = bitaY - bitaHeight / 2  - image.getBall().height() / 2;
         speedBallY *=-1;
         countLife--;
         return 1;
@@ -36,6 +41,11 @@ int TField::checkBorders()
     int j = 0;
     for(i = 0; i < blocksArrayHeight;i++) {
         for(j = 0; j < blocksArrayWidth; j++) {
+            if (blocksTtl[j][i] > 0) {
+                --blocksTtl[j][i];
+                continue;
+            }
+
             int brickLeft = j*brickWidth;
             int brickTop =  i* brickHeight;
             int brickRight = brickLeft + brickWidth;
@@ -47,29 +57,25 @@ int TField::checkBorders()
             if (((ballX - image.getBall().width()/2) < (brickRight)) &&
                     ((ballX + image.getBall().width()/2) >= (brickLeft)) &&
                     ((brickBottom) > (ballY - image.getBall().height()/2)) &&
-                     ((ballY + image.getBall().height()/2)>= (brickTop)))
+                    ((ballY + image.getBall().height()/2)>= (brickTop)))
             {
                 float distanceVert = std::min(abs(ballY + image.getBall().height()/2 - (brickTop)),
-                                            abs(ballY - image.getBall().height()/2 - (brickBottom)));
+                                              abs(ballY - image.getBall().height()/2 - (brickBottom)));
                 float distanceHoriz = std::min(abs (ballX + image.getBall().width()/2- (brickLeft)),
-                                             abs(ballX- image.getBall().width()/2- (brickRight)));
-                if(distanceVert < distanceHoriz) {
+                                               abs(ballX- image.getBall().width()/2- (brickRight)));
+                if(distanceVert <= distanceHoriz) {
                     speedBallY *=-1;
                 }
                 else {
-                    if(distanceVert > distanceHoriz) {
-                        speedBallX *= -1;
-                    }
-                    else {
-                        speedBallX *=-1;
-                        speedBallY *=-1;
-                    }
+                    speedBallX *= -1;
                 }
+                sound.onBlockHit();
                 countPoints();
                 blocksArray[j][i]--;
                 if(blocksArray[i][j] == 0){
                     blocksCount--;
                 }
+                blocksTtl[j][i] = 5;
                 return 0;
             }
         }
@@ -81,21 +87,76 @@ int TField::checkBorders()
     return 0;
 }
 
+float calcFallAngle(float x, float y) {
+
+    float vector = sqrt(x*x + y*y);
+    if(x < 0) {
+        return asin(-x/vector);
+    }
+    return (PI - asin(x/vector));
+}
+
 void TField::ballAngle(void)
 {
+    if (bitaHitTtl > 0) {
+        --bitaHitTtl;
+    }
     if(ballX > widgetWidth || ballX < 0) {
         speedBallX *= -1;
-    }
-    if(((bitaX - bitaWidth /2) <= (ballX + image.getBall().width()/2)) &&
-            ((bitaX + bitaWidth/2) >= (ballX - image.getBall().width()/2)) &&
-            (bitaY == (ballY + image.getBall().height() / 2)))
+        sound.onBlockHit();
+        return;
+    } else if((bitaX - bitaWidth /2 <= ballX + image.getBall().width()/2) &&
+              (bitaX + bitaWidth/2 >= ballX - image.getBall().width()/2) &&
+              (ballY + image.getBall().height() / 2 <= bitaY + bitaHeight / 2) &&
+              (ballY + image.getBall().height() / 2 >= bitaY - bitaHeight / 2) && bitaHitTtl == 0)
     {
-        speedBallY *= -1;
-    }
-    else {
-        if(ballY > widgetHeight || ballY < 0) {
-            speedBallY *= -1;
+        // Определяем угол падения
+        float fallAngle = calcFallAngle(speedBallX, speedBallY);
+
+        // 1) угол падения равен углу отражения:
+        float resAngle;
+        if(speedBallX < 0) {
+            resAngle = PI/2 + fallAngle;
+
         }
+        else {
+            resAngle = PI - fallAngle;
+        }
+
+        // 2) если бита двигается - поворачиваем угол в сторону движения:
+        if (bitaSpeedX > 0) {
+            resAngle -= PI/2;
+        } else if (bitaSpeedX < 0) {
+            resAngle += PI/2;
+        }else {
+            if((fabs(bitaX-widgetWidth/4 - ballX) < widgetWidth/4) && speedBallX > 0) {
+                resAngle = fallAngle;
+            }
+            else if((fabs(ballX - bitaX-widgetWidth/4) < widgetWidth/4) && speedBallX < 0) {
+                resAngle = fallAngle;
+            }
+        }
+
+        // Не даем шарику отразится вниз
+        if (resAngle < PI/6) {
+            resAngle = PI/6;
+        }
+        if (resAngle > 5*PI/6) {
+            resAngle = 5*PI/6;
+        }
+
+        // Считаем новую скорость биты
+        float absBallSpeed = sqrt(speedBallX * speedBallX + speedBallY * speedBallY);
+
+        speedBallX = absBallSpeed * cos(resAngle);
+        speedBallY = absBallSpeed * sin(resAngle);
+
+        sound.onBitaHit();
+        bitaHitTtl = 15;
+    }
+    else if(ballY > widgetHeight || ballY < 0) {
+        speedBallY *= -1;
+        sound.onBlockHit();
     }
 }
 
@@ -141,15 +202,14 @@ void TField::countPoints (void)
 void TField::moveBita(bool move)
 {
     if(move == true) {
-        bitaUpdate = 3;
+        bitaSpeedX = 3;
     }
     else {
-        bitaUpdate = -3;
+        bitaSpeedX = -3;
     }
 }
 
 void TField::stopMoveBita()
 {
-    bitaUpdate = 0;
+    bitaSpeedX = 0;
 }
-

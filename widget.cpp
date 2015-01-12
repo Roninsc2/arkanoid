@@ -3,10 +3,10 @@
 
 #define PI 3.14159265;
 
-Widget::Widget(QWidget *parent):
+TWidget::TWidget(QWidget *parent):
     QWidget(parent),
     ui(new Ui::Widget),
-    MyField(Image),
+    MyField(Image, Sound),
     Draw(MyField, Image)
 {
     QApplication::instance()->installEventFilter(this);
@@ -15,18 +15,18 @@ Widget::Widget(QWidget *parent):
     ui->nextLevel->hide();
 }
 
-Widget::~Widget()
+TWidget::~TWidget()
 {
     delete ui;
 }
 
-void Widget::paintEvent(QPaintEvent*)
+void TWidget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     Draw.drawField(painter);
 }
 
-void Widget::timerEvent(QTimerEvent *)
+void TWidget::timerEvent(QTimerEvent *)
 {
     MyField.updateBallandBita();
     if( MyField.checkBorders() ) {
@@ -51,7 +51,7 @@ void Widget::timerEvent(QTimerEvent *)
     update();
 }
 
-bool Widget::eventFilter(QObject *, QEvent *e)
+bool TWidget::eventFilter(QObject *, QEvent *e)
 {
     if (e->type() == QEvent::KeyPress) {
         onKeyPressed(((QKeyEvent*)e)->key());
@@ -65,7 +65,7 @@ bool Widget::eventFilter(QObject *, QEvent *e)
 }
 
 
-void  Widget::onKeyPressed(int key)
+void  TWidget::onKeyPressed(int key)
 {
     if (key == Qt::Key_Right) {
         MyField.moveBita(true);
@@ -75,7 +75,7 @@ void  Widget::onKeyPressed(int key)
     }
 }
 
-void Widget::on_start_clicked()
+void TWidget::on_start_clicked()
 {
     MyField.level = -1;
     MyField.countLife = 3;
@@ -84,10 +84,10 @@ void Widget::on_start_clicked()
     ui->start->hide();
 }
 
-void Widget::on_restart_clicked()
+void TWidget::on_restart_clicked()
 {
     MyField.level = 0;
-    MyField.bitaX = rand() % (MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
+    MyField.bitaX = rand() % (int)(MyField.widgetWidth - MyField.bitaWidth) + MyField.bitaWidth;
     MyField.ballX = MyField.bitaX;
     MyField.ballY = MyField.bitaY  - Image.getBall().height();
     MyField.speedBallY *=-1;
@@ -100,7 +100,7 @@ void Widget::on_restart_clicked()
     ui->restart->hide();
 }
 
-void Widget::on_nextLevel_clicked()
+void TWidget::on_nextLevel_clicked()
 {
     MyField.level += 1;
     MyField.generationBlocks();
