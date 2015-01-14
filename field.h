@@ -23,6 +23,7 @@ public:
 
 public:
 
+    int maxLevel = 0;
     int blocksCount = 0;
     int level = 1;
     int countLife = 0;

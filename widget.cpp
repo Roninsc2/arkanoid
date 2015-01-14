@@ -36,6 +36,11 @@ void TWidget::timerEvent(QTimerEvent *)
         }
         else {
             if(MyField.blocksCount == 0) {
+                if(MyField.level == MyField.maxLevel) {
+                    Sound.onGameWin();
+                    return;
+                }
+                Sound.onNewLevel();
                 ui->nextLevel->show();
             }
             else {

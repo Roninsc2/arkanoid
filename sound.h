@@ -9,6 +9,7 @@ enum ESoundType {
     ST_BitaHit,
     ST_GameOver,
     ST_NewLevel,
+    ST_GameWin,
 
     ST_Count
 };
@@ -21,6 +22,7 @@ public:
     void onBitaHit();
     void onGameOver();
     void onNewLevel();
+    void onGameWin();
 private:
     QVector<QSound*> sounds;
 };

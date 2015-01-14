@@ -6,7 +6,8 @@ TSound::TSound()
     sounds[ST_BitaHit] = new QSound("sounds/bita.wav");
     sounds[ST_BlockHit] = new QSound("sounds/block.wav");
     sounds[ST_GameOver] = new QSound("sounds/gameover.wav");
-    sounds[ST_NewLevel] = new QSound("souns/newLevel.wav");
+    sounds[ST_NewLevel] = new QSound("sounds/nextlevel.wav");
+    sounds[ST_GameWin] = new QSound("sounds/gamewin.wav");
 }
 
 void TSound::onBlockHit()
@@ -27,4 +28,9 @@ void TSound::onGameOver()
 void TSound::onNewLevel()
 {
     sounds[ST_NewLevel]->play();
+}
+
+void TSound::onGameWin()
+{
+    sounds[ST_GameWin]->play();
 }

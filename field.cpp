@@ -77,8 +77,10 @@ int TField::checkBorders()
                 skipRot = 5;
                 countPoints();
                 blocksArray[j][i]--;
-                if(blocksArray[i][j] == 0){
-                    blocksCount--;
+                blocksCount--;
+                if(blocksCount == 0){
+
+                    return 1;
                 }
                 blocksTtl[j][i] = 5;
                 return 0;
@@ -176,9 +178,7 @@ void TField::generationBlocks()
     for(i = 0; i <  blocksArrayHeight; i++) {
         for(j = 0; j < blocksArrayWidth; j++) {
             field >> temp;
-            if(temp !=  0) {
-                blocksCount++;
-            }
+            blocksCount += temp;
             blocksArray[j][i] = temp;
         }
     }
