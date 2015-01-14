@@ -29,6 +29,10 @@ void TField::updateBallandBita()
 int TField::checkBorders()
 {
     ballAngle();
+    if(skipRot) {
+        skipRot--;
+        return 0;
+    }
     if(ballY > widgetHeight - 1.4 && ballY < widgetHeight + 1.4) {
         bitaX = rand() % (int)(widgetWidth - bitaWidth) + bitaWidth;
         ballX = bitaX;
@@ -70,6 +74,7 @@ int TField::checkBorders()
                     speedBallX *= -1;
                 }
                 sound.onBlockHit();
+                skipRot = 5;
                 countPoints();
                 blocksArray[j][i]--;
                 if(blocksArray[i][j] == 0){

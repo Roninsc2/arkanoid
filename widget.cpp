@@ -43,6 +43,7 @@ void TWidget::timerEvent(QTimerEvent *)
                     idTimer = startTimer(10);
                 }
                 else {
+                    Sound.onGameOver();
                     ui->restart->show();
                 }
             }
@@ -92,7 +93,7 @@ void  TWidget::onKeyPressed(int key)
 
 void TWidget::startGame()
 {
-    MyField.level = 0;
+    MyField.level = -1;
     MyField.countLife = 3;
     MyField.generationBlocks();
     idTimer = startTimer(10);

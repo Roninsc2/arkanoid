@@ -3,7 +3,7 @@
 #include <QImage>
 #include <QMovie>
 #include <QVector>
-#include <string>
+#include <QString>
 
 
 class TImageManager
